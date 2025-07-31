@@ -1,0 +1,6 @@
+#required packages
+Flask
+Flask-SQLAlchemy
+Flask-Bcrypt
+PyJWT
+bcrypt
