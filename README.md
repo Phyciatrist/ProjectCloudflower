@@ -2,7 +2,7 @@
 
 Project Cloudflower is a web-based game built with a Unity client and a Python backend. The game client runs entirely in a web browser, served by a lightweight Python server that also manages game data and logic.
 
-Technology Stack
+Technology Stack/Choices
 
     Client (Frontend): C# with the Unity Engine (compiled to WebGL)
 
