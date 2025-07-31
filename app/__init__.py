@@ -1,4 +1,4 @@
-/ProjectCloudflower/      <-- This is your main GitHub repository folder
+/main/      <-- This is your main GitHub repository folder
 ├── .gitignore
 ├── README.md
 ├── app/                  <-- The folder for your Flask application
