@@ -52,8 +52,12 @@ def register_user():
     if User.query.filter_by(username=data.get('username')).first():
         return jsonify({'message': 'Username already exists'}), 409
 
-    # Hash the password for security
-    hashed_password = bcrypt.hashpw(data.get('password').encode('utf-8'), bcrypt.gensalt())
+   # --- PEPPERING THE PASSWORD ---
+    # Combine the provided password with the secret pepper from the app config
+    password_with_pepper = data.get('password') + current_app.config['SECRET_PEPPER']
+
+    # Hash the combined string for security
+    hashed_password = bcrypt.hashpw(password_with_pepper.encode('utf-8'), bcrypt.gensalt())
 
     new_user = User(
         username=data.get('username'),
@@ -78,9 +82,13 @@ def login():
     if not user:
         return jsonify({'message': 'Could not verify'}), 401, {'WWW-Authenticate': 'Basic realm="Login required!"'}
 
-    # Check the hashed password
-    if bcrypt.checkpw(auth.get('password').encode('utf-8'), user.password_hash.encode('utf-8')):
-        # Generate the JWT token
+    # --- PEPPERING THE PASSWORD ---
+        # Combine the provided password with the secret pepper
+        password_with_pepper = auth.get('password') + current_app.config['SECRET_PEPPER']
+        
+        # Check the combined string against the stored hash
+        if bcrypt.checkpw(password_with_pepper.encode('utf-8'), user.password_hash.encode('utf-8')):
+            # Generate the JWT token
         token = jwt.encode({
             'id': user.id,
             # 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30) # Optional: add expiration
