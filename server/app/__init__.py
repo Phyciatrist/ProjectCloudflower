@@ -21,7 +21,8 @@ def create_app():
     # Configure the SQLite database, which is a simple file-based database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cloudflower.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    app.config['SECRET_PEPPER'] = 'a-super-long-and-random-string-for-peppering'
+    
     # --- Initialize Extensions ---
     # Bind the extensions to the Flask app instance
     db.init_app(app)
